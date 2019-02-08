@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+
+<?import javafx.scene.chart.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.control.ControllerLlista">
+    <children>
+        <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <TableView fx:id="tablePacients" onMouseClicked="#clickTable" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                <JFXButton fx:id="btnLoadFile" maxWidth="1.7976931348623157E308" onAction="#clickLoadFile" text="Load" />
+                <HBox spacing="5.0">
+                    <children>
+                        <JFXTextField fx:id="txtDNI" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="DNI" />
+                        <JFXTextField fx:id="txtNom" labelFloat="true" maxWidth="1.7976931348623157E308" onKeyTyped="#changeText" promptText="Nom" />
+                        <JFXTextField fx:id="txtCognoms" labelFloat="true" maxWidth="1.7976931348623157E308" onKeyTyped="#changeText" promptText="Cognoms" />
+                        <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" onAction="#btnCerca" text="Cerca" textAlignment="CENTER" textOverrun="LEADING_ELLIPSIS" />
+                        <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" onAction="#btnChart" text="Chart" textAlignment="CENTER" textOverrun="LEADING_ELLIPSIS" />
+                    </children>
+                    <VBox.margin>
+                        <Insets top="5.0" />
+                    </VBox.margin>
+                    <padding>
+                        <Insets top="5.0" />
+                    </padding>
+                </HBox>
+                <PieChart fx:id="idPieChart" />
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
