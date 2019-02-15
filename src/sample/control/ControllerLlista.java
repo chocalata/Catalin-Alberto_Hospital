@@ -27,12 +27,12 @@ import java.util.stream.Collectors;
 public class ControllerLlista implements Initializable {
 
     private String csvFile = null;
-    private List<Pacient> p = new ArrayList<>();
+    private List<Pacient> pacientList = new ArrayList<>();
     private ObservableList<Pacient> data;
 
     @FXML TableView<Pacient> tablePacients;
     @FXML JFXButton btnLoadFile;
-    @FXML JFXTextField txtDNI, txtNom, txtCognoms;
+    @FXML JFXTextField txtDNI, txtNom, txtCognoms, txtEdat;
     @FXML PieChart idPieChart;
 
     @Override
@@ -70,14 +70,14 @@ public class ControllerLlista implements Initializable {
 
         //data.add(new Pacient("111", "n", "co", LocalDate.of(2000, 12, 12), Persona.Genere.HOME, "55555", 5.4f, 100));
         loadData();
-        data.addAll(p);
+        data.addAll(pacientList);
         tablePacients.setItems(data);
 
     }
 
     private void loadData() {
         Hospital hospital = new Hospital();
-        p.addAll(hospital.loadPacients(csvFile));
+        pacientList.addAll(hospital.loadPacients(csvFile));
     }
 
 
@@ -95,11 +95,12 @@ public class ControllerLlista implements Initializable {
     }
 
     public void btnCerca(ActionEvent event) {
-        List<Pacient> pacients = p.stream()
+        List<Pacient> pacients = pacientList.stream()
                 .filter(pacient -> pacient.getDNI().equals(txtDNI.getText()))
+                .filter(pacient -> String.valueOf(pacient.getEdat()).equals(txtEdat.getText()))
                 .collect(Collectors.toList());
         if(txtDNI.getText().equals("")) {
-            updateTable(p);
+            updateTable(pacientList);
         }else updateTable(pacients);
     }
 
@@ -111,7 +112,7 @@ public class ControllerLlista implements Initializable {
 
     public void changeText(KeyEvent keyEvent) {
         data.clear();
-        List<Pacient> pacients = p.stream()
+        List<Pacient> pacients = pacientList.stream()
                 .filter(pacient -> pacient.getNom().contains(txtNom.getText()))
                 .filter((pacient -> pacient.getCognoms().contains(txtCognoms.getText())))
                 .collect(Collectors.toList());
@@ -133,10 +134,10 @@ public class ControllerLlista implements Initializable {
      */
     public void btnChart(ActionEvent event) {
         idPieChart.getData().clear();
-        long dones = p.stream()
+        long dones = pacientList.stream()
                 .filter(pacient -> pacient.getGenere()== Persona.Genere.DONA)
                 .count();
-        long homes = p.stream()
+        long homes = pacientList.stream()
                 .filter(pacient -> pacient.getGenere()== Persona.Genere.HOME)
                 .count();
         idPieChart.setTitle("Gènere");
