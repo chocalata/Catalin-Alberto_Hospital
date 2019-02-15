@@ -17,6 +17,8 @@ public class Main {
 
         p.addAll(hospital.loadPacients(csvFile));
 
+        // ASD ASD
+
 
     }
 
