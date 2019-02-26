@@ -23,6 +23,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ControllerLlista implements Initializable {
 
@@ -33,7 +34,7 @@ public class ControllerLlista implements Initializable {
     @FXML TableView<Pacient> tablePacients;
     @FXML JFXButton btnLoadFile;
     @FXML JFXTextField txtDNI, txtNom, txtCognoms, txtEdat;
-    @FXML PieChart idPieChart;
+    @FXML PieChart idPieChart, idPieChart1, idPieChart2;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -134,15 +135,62 @@ public class ControllerLlista implements Initializable {
      */
     public void btnChart(ActionEvent event) {
         idPieChart.getData().clear();
-        long dones = pacientList.stream()
-                .filter(pacient -> pacient.getGenere()== Persona.Genere.DONA)
-                .count();
-        long homes = pacientList.stream()
-                .filter(pacient -> pacient.getGenere()== Persona.Genere.HOME)
-                .count();
-        idPieChart.setTitle("Gènere");
-        idPieChart.getData().add(new PieChart.Data(Persona.Genere.DONA.toString(),dones));
-        idPieChart.getData().add(new PieChart.Data(Persona.Genere.HOME.toString(),homes));
+        idPieChart1.getData().clear();
+        idPieChart2.getData().clear();
+        Map<Integer, Integer> edatMap = new HashMap<Integer, Integer>();
+//        long edat = pacientList.stream()
+//                .filter(pacient -> pacient.getGenere()== Persona.Genere.DONA)
+//                .count();
 
+
+        for(Pacient p: pacientList) {
+            if(edatMap.containsKey(p.getEdat())) {
+                edatMap.put(p.getEdat(), edatMap.get(p.getEdat())+1);
+
+            }else {
+                edatMap.put(p.getEdat(),1);
+            }
+        }
+        idPieChart.setTitle("Edat");
+
+        for (int key : edatMap.keySet()) {
+            idPieChart.getData().add(new PieChart.Data(String.valueOf(key),edatMap.get(key)));
+        }
+
+
+
+        Map<Float, Integer> pesMap = new HashMap<Float, Integer>();
+
+        for(Pacient p: pacientList) {
+            if(pesMap.containsKey(p.getPes())) {
+                pesMap.put(p.getPes(), pesMap.get(p.getPes())+1);
+
+            }else {
+                pesMap.put(p.getPes(),1);
+            }
+        }
+        idPieChart1.setTitle("PES");
+
+        for (float key : pesMap.keySet()) {
+            idPieChart1.getData().add(new PieChart.Data(String.valueOf(key),pesMap.get(key)));
+        }
+
+
+
+        Map<Integer, Integer> alcada = new HashMap<Integer, Integer>();
+
+        for(Pacient p: pacientList) {
+            if(alcada.containsKey(p.getAlçada())) {
+                alcada.put(p.getAlçada(), alcada.get(p.getAlçada())+1);
+
+            }else {
+                alcada.put(p.getAlçada(),1);
+            }
+        }
+        idPieChart2.setTitle("Alçada");
+
+        for (int key : alcada.keySet()) {
+            idPieChart2.getData().add(new PieChart.Data(String.valueOf(key),alcada.get(key)));
+        }
     }
 }

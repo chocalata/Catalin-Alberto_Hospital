@@ -34,7 +34,11 @@
                         <Insets top="5.0" />
                     </padding>
                 </HBox>
-                <PieChart fx:id="idPieChart" />
+                <HBox>
+                    <PieChart fx:id="idPieChart" />
+                    <PieChart fx:id="idPieChart1" />
+                    <PieChart fx:id="idPieChart2" />
+                </HBox>
             </children>
         </VBox>
     </children>

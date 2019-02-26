@@ -1,7 +1,12 @@
 package sample.model;
 
 import com.opencsv.CSVReader;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.chart.PieChart;
 
+import java.awt.*;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -41,5 +46,4 @@ public class Hospital {
         //Retornem la llista de valors
         return map_pacients.values();
     }
-
 }
