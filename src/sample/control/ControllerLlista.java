@@ -95,12 +95,53 @@ public class ControllerLlista implements Initializable {
         }
     }
 
+    private boolean filtroEdad(Pacient pacient){
+        if(txtEdat.getText().matches("^[0-9]+$")){
+            System.out.println("edades de " + txtEdat.getText());
+            return pacient.getEdat() == Integer.parseInt(txtEdat.getText());
+        }else if(txtEdat.getText().matches("^[0-9]+-[0-9]+$")){
+            int num1 = Integer.parseInt(txtEdat.getText().split("-")[0]);
+            int num2 = Integer.parseInt(txtEdat.getText().split("-")[1]);
+            System.out.println("rango entre " + num1 + " y " + num2);
+            return num1 > num2
+                    ?pacient.getEdat()<=num1 && pacient.getEdat()>=num2
+                    :pacient.getEdat()>=num1 && pacient.getEdat()<=num2;
+        }else if(txtEdat.getText().matches("^[0-9]+([<>])$")){
+            if(txtEdat.getText().replace(">", "").matches("^[0-9]+$")){
+                System.out.println(txtEdat.getText().replace(">", "") + ">");
+                return Integer.parseInt(txtEdat.getText().replace(">","")) > pacient.getEdat();
+            }else {
+                System.out.println(txtEdat.getText().replace("<", "") + "<");
+                return Integer.parseInt(txtEdat.getText().replace("<","")) < pacient.getEdat();
+            }
+        }else {
+            return false;
+        }
+    }
     public void btnCerca(ActionEvent event) {
+//        if(pacientList.get(0).getEdat() == Integer.parseInt(txtEdat.getText())) {
+//            System.out.println("TIENEN LA MISMA EDAD");
+//        }
+
         List<Pacient> pacients = pacientList.stream()
-                .filter(pacient -> pacient.getDNI().equals(txtDNI.getText()))
-                .filter(pacient -> String.valueOf(pacient.getEdat()).equals(txtEdat.getText()))
+                .filter(pacient -> {
+                    if(txtDNI.getText().isEmpty() && !txtEdat.getText().isEmpty()
+                            || txtEdat.getText().isEmpty() && !txtDNI.getText().isEmpty()){
+                        if(txtDNI.getText().isEmpty()){
+                            return filtroEdad(pacient);
+                            //pacient.getEdat() == Integer.parseInt(txtEdat.getText());
+                        }else {
+                            return pacient.getDNI().equals(txtDNI.getText());
+                        }
+                    }else if(!txtDNI.getText().isEmpty() && !txtEdat.getText().isEmpty()){
+                        return pacient.getDNI().equals(txtDNI.getText()) && filtroEdad(pacient);
+                    }else {
+                        return false;
+                    }
+                })
                 .collect(Collectors.toList());
-        if(txtDNI.getText().equals("")) {
+
+        if(txtDNI.getText().equals("") && txtEdat.getText().equals("")) {
             updateTable(pacientList);
         }else updateTable(pacients);
     }
