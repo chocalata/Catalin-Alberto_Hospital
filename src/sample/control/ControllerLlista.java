@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.PieChart;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -33,7 +34,7 @@ public class ControllerLlista implements Initializable {
 
     @FXML TableView<Pacient> tablePacients;
     @FXML JFXButton btnLoadFile;
-    @FXML JFXTextField txtDNI, txtNom, txtCognoms, txtEdat;
+    @FXML JFXTextField txtDNI, txtNom, txtCognoms, txtEdat, txtAlcada, txtPes;
     @FXML PieChart idPieChart, idPieChart1, idPieChart2;
 
     @Override
@@ -97,22 +98,56 @@ public class ControllerLlista implements Initializable {
 
     private boolean filtroEdad(Pacient pacient){
         if(txtEdat.getText().matches("^[0-9]+$")){
-            System.out.println("edades de " + txtEdat.getText());
             return pacient.getEdat() == Integer.parseInt(txtEdat.getText());
         }else if(txtEdat.getText().matches("^[0-9]+-[0-9]+$")){
             int num1 = Integer.parseInt(txtEdat.getText().split("-")[0]);
             int num2 = Integer.parseInt(txtEdat.getText().split("-")[1]);
-            System.out.println("rango entre " + num1 + " y " + num2);
             return num1 > num2
                     ?pacient.getEdat()<=num1 && pacient.getEdat()>=num2
                     :pacient.getEdat()>=num1 && pacient.getEdat()<=num2;
         }else if(txtEdat.getText().matches("^[0-9]+([<>])$")){
             if(txtEdat.getText().replace(">", "").matches("^[0-9]+$")){
-                System.out.println(txtEdat.getText().replace(">", "") + ">");
                 return Integer.parseInt(txtEdat.getText().replace(">","")) > pacient.getEdat();
             }else {
-                System.out.println(txtEdat.getText().replace("<", "") + "<");
                 return Integer.parseInt(txtEdat.getText().replace("<","")) < pacient.getEdat();
+            }
+        }else {
+            return false;
+        }
+    }
+    private boolean filtroAltura(Pacient pacient){
+        if(txtAlcada.getText().matches("^[0-9]+$")){
+            return pacient.getAlçada() == Integer.parseInt(txtAlcada.getText());
+        }else if(txtAlcada.getText().matches("^[0-9]+-[0-9]+$")){
+            int num1 = Integer.parseInt(txtAlcada.getText().split("-")[0]);
+            int num2 = Integer.parseInt(txtAlcada.getText().split("-")[1]);
+            return num1 > num2
+                    ?pacient.getAlçada()<=num1 && pacient.getAlçada()>=num2
+                    :pacient.getAlçada()>=num1 && pacient.getAlçada()<=num2;
+        }else if(txtAlcada.getText().matches("^[0-9]+([<>])$")){
+            if(txtAlcada.getText().replace(">", "").matches("^[0-9]+$")){
+                return Integer.parseInt(txtAlcada.getText().replace(">","")) > pacient.getAlçada();
+            }else {
+                return Integer.parseInt(txtAlcada.getText().replace("<","")) < pacient.getAlçada();
+            }
+        }else {
+            return false;
+        }
+    }
+    private boolean filtroPeso(Pacient pacient){
+        if(txtPes.getText().matches("^[0-9]+(\\.[0-9]+)?$")){
+            return pacient.getPes() == Float.parseFloat(txtPes.getText());
+        }else if(txtPes.getText().matches("^[0-9]+(\\.[0-9]+)?-[0-9]+(\\.[0-9]+)?$")){
+            float num1 = Float.parseFloat(txtPes.getText().split("-")[0]);
+            float num2 = Float.parseFloat(txtPes.getText().split("-")[1]);
+            return num1 > num2
+                    ?pacient.getPes()<=num1 && pacient.getPes()>=num2
+                    :pacient.getPes()>=num1 && pacient.getPes()<=num2;
+        }else if(txtPes.getText().matches("^[0-9]+(\\.[0-9]+)?([<>])$")){
+            if(txtPes.getText().replace(">", "").matches("^[0-9]+(\\.[0-9]+)?$")){
+                return Float.parseFloat(txtPes.getText().replace(">","")) > pacient.getPes();
+            }else {
+                return Float.parseFloat(txtPes.getText().replace("<","")) < pacient.getPes();
             }
         }else {
             return false;
@@ -122,9 +157,12 @@ public class ControllerLlista implements Initializable {
 //        if(pacientList.get(0).getEdat() == Integer.parseInt(txtEdat.getText())) {
 //            System.out.println("TIENEN LA MISMA EDAD");
 //        }
-
         List<Pacient> pacients = pacientList.stream()
-                .filter(pacient -> {
+                .filter(pacient -> txtEdat.getText().equals("") || filtroEdad(pacient))
+                .filter(pacient -> txtAlcada.getText().equals("") || filtroAltura(pacient))
+                .filter(pacient -> txtPes.getText().equals("") || filtroPeso(pacient))
+                .filter(pacient -> txtDNI.getText().equals("") || txtDNI.getText().equals(pacient.getDNI()))
+                /*{
                     if(txtDNI.getText().isEmpty() && !txtEdat.getText().isEmpty()
                             || txtEdat.getText().isEmpty() && !txtDNI.getText().isEmpty()){
                         if(txtDNI.getText().isEmpty()){
@@ -138,10 +176,13 @@ public class ControllerLlista implements Initializable {
                     }else {
                         return false;
                     }
-                })
+                }*/
                 .collect(Collectors.toList());
 
-        if(txtDNI.getText().equals("") && txtEdat.getText().equals("")) {
+        if(txtDNI.getText().equals("")
+                && txtEdat.getText().equals("")
+                && txtAlcada.getText().equals("")
+                && txtPes.getText().equals("")) {
             updateTable(pacientList);
         }else updateTable(pacients);
     }

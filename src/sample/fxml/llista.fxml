@@ -22,6 +22,8 @@
                     <children>
                         <JFXTextField fx:id="txtDNI" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="DNI" />
                         <JFXTextField fx:id="txtEdat" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Edat (n/n-n/&gt;&lt;n)" />
+                        <JFXTextField fx:id="txtAlcada" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Alçada (n/n-n/&gt;&lt;n)" />
+                        <JFXTextField fx:id="txtPes" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Pes (n/n-n/&gt;&lt;n)" />
                         <JFXTextField fx:id="txtNom" labelFloat="true" maxWidth="1.7976931348623157E308" onKeyTyped="#changeText" promptText="Nom" />
                         <JFXTextField fx:id="txtCognoms" labelFloat="true" maxWidth="1.7976931348623157E308" onKeyTyped="#changeText" promptText="Cognoms" />
                         <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" onAction="#btnCerca" text="Cerca" textAlignment="CENTER" textOverrun="LEADING_ELLIPSIS" />
