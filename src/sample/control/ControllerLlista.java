@@ -272,7 +272,7 @@ public class ControllerLlista implements Initializable {
                 idPieChart.getData().add(new PieChart.Data(String.valueOf(key),edatMap.get(key)));
             }
 
-            for(Pacient p: pacientList) {
+            for(Pacient p: listaChart) {
                 if(pesMap.containsKey(p.getPes())) {
                     pesMap.put(p.getPes(), pesMap.get(p.getPes())+1);
 
@@ -287,7 +287,7 @@ public class ControllerLlista implements Initializable {
             }
 
 
-            for(Pacient p: pacientList) {
+            for(Pacient p: listaChart) {
                 if(alcada.containsKey(p.getAlçada())) {
                     alcada.put(p.getAlçada(), alcada.get(p.getAlçada())+1);
 
