@@ -26,33 +26,20 @@ public class Controller implements Initializable {
     @FXML public void onClickBtnMenu(ActionEvent actionEvent) {
         //System.out.println( ((Button)actionEvent.getSource()).getText());
         String btn = ((Button)actionEvent.getSource()).getId();
-
-        if(btn.equals("btnLlista")) {
-            // ListView lsvLlista = new ListView();
-            paneDretORG.getChildren().clear();
-            AnchorPane anchorPaneLlista = null;
-            try {
-
-                anchorPaneLlista = FXMLLoader.load(getClass().getResource("../fxml/llista.fxml"));
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        AnchorPane anchorPaneLlista = null;
+        paneDretORG.getChildren().clear();
+        try {
+            if(btn.equals("btnLlista")) {
+                // ListView lsvLlista = new ListView();
+                    anchorPaneLlista = FXMLLoader.load(getClass().getResource("../fxml/llista.fxml"));
+            }else if(btn.equals("btnCerca")){
+                    anchorPaneLlista = FXMLLoader.load(getClass().getResource("../fxml/cerca.fxml"));
+            }else if( btn.equals("btnLlistaEspera")){
+                    anchorPaneLlista = FXMLLoader.load(getClass().getResource("../fxml/llistaEspera.fxml"));
+            }else {paneDretORG.getChildren().clear();}
             paneDretORG.getChildren().add(anchorPaneLlista);
-
-        }else if(btn.equals("btnCerca")){
-            paneDretORG.getChildren().clear();
-            AnchorPane anchorPaneLlista = null;
-            try {
-
-                anchorPaneLlista = FXMLLoader.load(getClass().getResource("../fxml/cerca.fxml"));
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            paneDretORG.getChildren().add(anchorPaneLlista);
-        }else{
-            paneDretORG.getChildren().clear();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
