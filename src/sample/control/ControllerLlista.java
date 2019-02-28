@@ -28,7 +28,7 @@ import java.util.stream.Stream;
 
 public class ControllerLlista implements Initializable {
 
-    private String csvFile = null;
+    private static String csvFile = null;
     private List<Pacient> pacientList = new ArrayList<>();
     private ObservableList<Pacient> data;
 
@@ -83,14 +83,16 @@ public class ControllerLlista implements Initializable {
     }
 
 
-    public void clickLoadFile(ActionEvent event) {
+    public void clickLoadFile() {
         if(csvFile == null) {
             FileChooser fc = new FileChooser();
             fc.setTitle("Select csv file");
             File file = fc.showOpenDialog(null);
-            csvFile = file.getAbsolutePath();
-            setTableView();
-            btnLoadFile.setText("Loaded");
+            if(file != null) {
+                csvFile = file.getAbsolutePath();
+                setTableView();
+                btnLoadFile.setText("Loaded");
+            }
         }else {
             btnLoadFile.setText("File is loaded");
         }
@@ -161,7 +163,6 @@ public class ControllerLlista implements Initializable {
                 .filter(pacient -> txtEdat.getText().equals("") || filtroEdad(pacient))
                 .filter(pacient -> txtAlcada.getText().equals("") || filtroAltura(pacient))
                 .filter(pacient -> txtPes.getText().equals("") || filtroPeso(pacient))
-                .filter(pacient -> txtDNI.getText().equals("") || txtDNI.getText().equals(pacient.getDNI()))
                 /*{
                     if(txtDNI.getText().isEmpty() && !txtEdat.getText().isEmpty()
                             || txtEdat.getText().isEmpty() && !txtDNI.getText().isEmpty()){
@@ -179,8 +180,7 @@ public class ControllerLlista implements Initializable {
                 }*/
                 .collect(Collectors.toList());
 
-        if(txtDNI.getText().equals("")
-                && txtEdat.getText().equals("")
+        if(txtEdat.getText().equals("")
                 && txtAlcada.getText().equals("")
                 && txtPes.getText().equals("")) {
             updateTable(pacientList);
@@ -192,12 +192,13 @@ public class ControllerLlista implements Initializable {
         data.addAll(pacients);
         tablePacients.setItems(data);
     }
-
+///////////////////FALTA: que se pueda buscar con el tipo de filtro de changeText() y con btnCerca()
     public void changeText(KeyEvent keyEvent) {
         data.clear();
         List<Pacient> pacients = pacientList.stream()
                 .filter(pacient -> pacient.getNom().contains(txtNom.getText()))
                 .filter((pacient -> pacient.getCognoms().contains(txtCognoms.getText())))
+                .filter(pacient -> pacient.getDNI().contains(txtDNI.getText()))
                 .collect(Collectors.toList());
         data.addAll(pacients);
         tablePacients.setItems(data);
@@ -274,5 +275,9 @@ public class ControllerLlista implements Initializable {
         for (int key : alcada.keySet()) {
             idPieChart2.getData().add(new PieChart.Data(String.valueOf(key),alcada.get(key)));
         }
+    }
+
+    public static void setCsvFile(String csvFile) {
+        ControllerLlista.csvFile = csvFile;
     }
 }
