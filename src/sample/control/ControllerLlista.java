@@ -32,6 +32,9 @@ public class ControllerLlista implements Initializable {
     private List<Pacient> pacientListORG = new ArrayList<>();
     private List<Pacient> pacientList = new ArrayList<>();
 
+    //////////////FALTA: hacer que los charts se muerten a partir de esta lista. CAMBIAR EL FOREACH QUE SEA 1.
+    private List<Pacient> listaChart = new ArrayList<>();
+
 
     private ObservableList<Pacient> data;
 
@@ -187,7 +190,11 @@ public class ControllerLlista implements Initializable {
                 && txtAlcada.getText().equals("")
                 && txtPes.getText().equals("")) {
             updateTable(pacientList);
-        }else updateTable(pacients);
+            listaChart = pacientList;
+        }else {
+            updateTable(pacients);
+            listaChart = pacients;
+        }
     }
 
     private void updateTable(List<Pacient> pacients) {
@@ -195,7 +202,6 @@ public class ControllerLlista implements Initializable {
         data.addAll(pacients);
         tablePacients.setItems(data);
     }
-///////////////////FALTA: que se pueda buscar con el tipo de filtro de changeText() y con btnCerca()
     /*public void changeText(KeyEvent keyEvent) {
         data.clear();
         List<Pacient> pacients = pacientList.stream()
@@ -252,7 +258,7 @@ public class ControllerLlista implements Initializable {
             Map<Float, Integer> pesMap = new HashMap<Float, Integer>();
             Map<Integer, Integer> alcada = new HashMap<Integer, Integer>();
 
-            for(Pacient p: pacientList) {
+            for(Pacient p: listaChart) {
                 if(edatMap.containsKey(p.getEdat())) {
                     edatMap.put(p.getEdat(), edatMap.get(p.getEdat())+1);
 
