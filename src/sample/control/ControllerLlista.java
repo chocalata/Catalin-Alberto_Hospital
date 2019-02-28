@@ -20,7 +20,10 @@ import sample.model.Hospital;
 import sample.model.Pacient;
 import sample.model.Persona;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -31,10 +34,8 @@ public class ControllerLlista implements Initializable {
     private static String csvFile = null;
     private List<Pacient> pacientListORG = new ArrayList<>();
     private List<Pacient> pacientList = new ArrayList<>();
-
-    //////////////FALTA: hacer que los charts se muerten a partir de esta lista. CAMBIAR EL FOREACH QUE SEA 1.
-    private List<Pacient> listaChart = new ArrayList<>();
-
+    /////////////FALTA QUITAR EL BOTON DE CHART
+    private List<Pacient> listaChart = pacientList;
 
     private ObservableList<Pacient> data;
 
@@ -155,7 +156,7 @@ public class ControllerLlista implements Initializable {
             return false;
         }
     }
-    public void btnCerca(ActionEvent event) {
+    public void btnCerca(MouseEvent event) {
 //        if(pacientList.get(0).getEdat() == Integer.parseInt(txtEdat.getText())) {
 //            System.out.println("TIENEN LA MISMA EDAD");
 //        }
@@ -195,6 +196,7 @@ public class ControllerLlista implements Initializable {
             updateTable(pacients);
             listaChart = pacients;
         }
+        btnChart(event);
     }
 
     private void updateTable(List<Pacient> pacients) {
@@ -216,6 +218,30 @@ public class ControllerLlista implements Initializable {
     public void clickTable(MouseEvent event) {
         //Cal verificar si hi ha alguna selecció feta al fer doble click
         if (event.getClickCount() == 2 && !tablePacients.getSelectionModel().isEmpty()){
+            try {
+                File file = new File("src/sample/data/LlistaEspera.csv");
+
+                //////////////////HACER QUE CUANDO SE CREE UN NUEVO FICHERO SE AÑADA LA CABECERA DEL CSV
+                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true));
+                if(file.createNewFile()){
+                    bufferedWriter.write("dni,nom,cognoms,datanaixament,genere,telèfon,pes,alçada");
+                    bufferedWriter.newLine();
+                }
+               bufferedWriter.write(tablePacients.getSelectionModel().getSelectedItem().getDNI() + ","
+                        + tablePacients.getSelectionModel().getSelectedItem().getNom() + ","
+                        + tablePacients.getSelectionModel().getSelectedItem().getCognoms() + ","
+                        + tablePacients.getSelectionModel().getSelectedItem().getDataNaixament().getDayOfMonth() + "/"
+                            + tablePacients.getSelectionModel().getSelectedItem().getDataNaixament().getMonthValue() + "/"
+                            + tablePacients.getSelectionModel().getSelectedItem().getDataNaixament().getYear() + ","
+                        + tablePacients.getSelectionModel().getSelectedItem().getGenere() + ","
+                        + tablePacients.getSelectionModel().getSelectedItem().getTelefon() + ","
+                        + tablePacients.getSelectionModel().getSelectedItem().getPes() + ","
+                        + tablePacients.getSelectionModel().getSelectedItem().getAlçada());
+                bufferedWriter.newLine();
+                bufferedWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             System.out.println(tablePacients.getSelectionModel().getSelectedItem().getNom());
         }
            // Crear Metodo crear Tabla lista de espera (utilizar unicamente si no esta instanciado la lista).

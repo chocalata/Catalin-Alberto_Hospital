@@ -28,7 +28,7 @@
                         <JFXTextField fx:id="txtEdat" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Edat (n/n-n/n&gt;&lt;)" />
                         <JFXTextField fx:id="txtAlcada" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Alçada (n/n-n/n&gt;&lt;)" />
                         <JFXTextField fx:id="txtPes" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Pes (n/n-n/n&gt;&lt;)" />
-                        <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" onAction="#btnCerca" text="Cerca" textAlignment="CENTER" textOverrun="LEADING_ELLIPSIS" />
+                        <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" onMouseClicked="#btnCerca" text="Cerca" textAlignment="CENTER" textOverrun="LEADING_ELLIPSIS" />
                         <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" onMouseClicked="#btnChart" text="Chart" textAlignment="CENTER" textOverrun="LEADING_ELLIPSIS" />
                     </children>
                     <VBox.margin>
