@@ -236,150 +236,140 @@ public class ControllerLlista implements Initializable {
      * Quants pacients homes i quants pacients dones hi ha
      * @param event
      */
-    public void btnChart(ActionEvent event) {
+    public void btnChart(MouseEvent event) {
         idPieChart.getData().clear();
         idPieChart1.getData().clear();
         idPieChart2.getData().clear();
-        Map<Integer, Integer> edatMap = new HashMap<Integer, Integer>();
 //        long edat = pacientList.stream()
 //                .filter(pacient -> pacient.getGenere()== Persona.Genere.DONA)
 //                .count();
 
+        if (event.getClickCount() == 1) {
+            Map<Integer, Integer> edatMap = new HashMap<Integer, Integer>();
+            Map<Float, Integer> pesMap = new HashMap<Float, Integer>();
+            Map<Integer, Integer> alcada = new HashMap<Integer, Integer>();
 
-        for(Pacient p: pacientList) {
-            if(edatMap.containsKey(p.getEdat())) {
-                edatMap.put(p.getEdat(), edatMap.get(p.getEdat())+1);
+            for(Pacient p: pacientList) {
+                if(edatMap.containsKey(p.getEdat())) {
+                    edatMap.put(p.getEdat(), edatMap.get(p.getEdat())+1);
 
-            }else {
-                edatMap.put(p.getEdat(),1);
+                }else {
+                    edatMap.put(p.getEdat(),1);
+                }
             }
-        }
-        idPieChart.setTitle("Edat");
+            idPieChart.setTitle("Edat");
 
-        for (int key : edatMap.keySet()) {
-            idPieChart.getData().add(new PieChart.Data(String.valueOf(key),edatMap.get(key)));
-        }
-
-
-
-        Map<Float, Integer> pesMap = new HashMap<Float, Integer>();
-
-        for(Pacient p: pacientList) {
-            if(pesMap.containsKey(p.getPes())) {
-                pesMap.put(p.getPes(), pesMap.get(p.getPes())+1);
-
-            }else {
-                pesMap.put(p.getPes(),1);
+            for (int key : edatMap.keySet()) {
+                idPieChart.getData().add(new PieChart.Data(String.valueOf(key),edatMap.get(key)));
             }
-        }
-        idPieChart1.setTitle("PES");
 
-        for (float key : pesMap.keySet()) {
-            idPieChart1.getData().add(new PieChart.Data(String.valueOf(key),pesMap.get(key)));
-        }
+            for(Pacient p: pacientList) {
+                if(pesMap.containsKey(p.getPes())) {
+                    pesMap.put(p.getPes(), pesMap.get(p.getPes())+1);
 
-
-
-//        Map<Integer, Integer> alcada = new HashMap<Integer, Integer>();
-//
-//        for(Pacient p: pacientList) {
-//            if(alcada.containsKey(p.getAlçada())) {
-//                alcada.put(p.getAlçada(), alcada.get(p.getAlçada())+1);
-//
-//            }else {
-//                alcada.put(p.getAlçada(),1);
-//            }
-//        }
-//        idPieChart2.setTitle("Alçada");
-//
-//        for (int key : alcada.keySet()) {
-//            idPieChart2.getData().add(new PieChart.Data(String.valueOf(key),alcada.get(key)));
-//        }
-
-
-
-        // Filtro Rango por Edad.
-//        Map<String, Integer> rangEdat = new HashMap<String, Integer>();
-//
-//        for(Pacient p: pacientList) {
-//
-//                // Utilizamos Ternarias para comprobar si existe la key con valor. Si Hay valor sumas 1 sino estableces un valor
-//                // Pd: No deberia Harcodear Tanto
-//
-//            if(p.getEdat() <= 20 ){
-//                rangEdat.put("<=20" , rangEdat.containsKey("<=20") ? rangEdat.get("<=20")+1 : 1);
-//            } else if ( p.getEdat() <= 30 ) {
-//                rangEdat.put("20-30", rangEdat.containsKey("20-30") ? rangEdat.get("20-30") + 1 : 1);
-//            } else if ( p.getEdat() <= 40 ) {
-//                rangEdat.put("31-40", rangEdat.containsKey("31-40") ? rangEdat.get("31-40") + 1 : 1);
-//            } else if ( p.getEdat() <= 50 ) {
-//                rangEdat.put("41-50", rangEdat.containsKey("41-50") ? rangEdat.get("41-50") + 1 : 1);
-//            } else if ( p.getEdat() <= 60 ) {
-//                rangEdat.put("51-60", rangEdat.containsKey("51-60") ? rangEdat.get("51-60") + 1 : 1);
-//            } else if ( p.getEdat() >= 60 ) {
-//                rangEdat.put(">=60", rangEdat.containsKey(">=60") ? rangEdat.get(">=60") + 1 : 1);
-//            }
-//        }
-//        idPieChart2.setTitle("Rang Edat");
-//
-//        for (String key : rangEdat.keySet()) {
-//            idPieChart2.getData().add(new PieChart.Data(key + " = " + String.valueOf(rangEdat.get(key)),rangEdat.get(key)));
-//        }
-
-
-        // Rang Pes
-//        Map<String, Integer> rangPes = new HashMap<String, Integer>();
-//
-//        for(Pacient p: pacientList) {
-//
-//            // Utilizamos Ternarias para comprobar si existe la key con valor. Si Hay valor sumas 1 sino estableces un valor
-//            // Pd: No deberia Harcodear Tanto
-//
-//            if(p.getPes() <= 60 ){
-//                rangPes.put("<=60" , rangPes.containsKey("<=60") ? rangPes.get("<=60")+1 : 1);
-//            } else if ( p.getPes() <= 80 ) {
-//                rangPes.put("61-80", rangPes.containsKey("61-80") ? rangPes.get("61-80") + 1 : 1);
-//            } else if ( p.getPes() <= 100 ) {
-//                rangPes.put("81-100", rangPes.containsKey("81-100") ? rangPes.get("81-100") + 1 : 1);
-//            } else if ( p.getPes() <= 120 ) {
-//                rangPes.put("101-120", rangPes.containsKey("101-120") ? rangPes.get("101-120") + 1 : 1);
-//            } else if ( p.getPes() >= 120 ) {
-//                rangPes.put(">120", rangPes.containsKey(">120") ? rangPes.get(">120") + 1 : 1);
-//            }
-//        }
-//        idPieChart2.setTitle("Rang Pes");
-//
-//        for (String key : rangPes.keySet()) {
-//            idPieChart2.getData().add(new PieChart.Data(key + " = " + String.valueOf(rangPes.get(key)),rangPes.get(key)));
-//        }
-//
-        Map<String, Integer> rangAlcada = new HashMap<String, Integer>();
-
-        for(Pacient p: pacientList) {
-
-            // Utilizamos Ternarias para comprobar si existe la key con valor. Si Hay valor sumas 1 sino estableces un valor
-            // Pd: No deberia Harcodear Tanto
-
-            if(p.getAlçada() <= 150 ){
-                rangAlcada.put("<=1.50" , rangAlcada.containsKey("<=1.50") ? rangAlcada.get("<=1.50")+1 : 1);
-            } else if ( p.getAlçada() <= 160 ) {
-                rangAlcada.put("1.51-1.60", rangAlcada.containsKey("1.51-1.60") ? rangAlcada.get("1.51-1.60") + 1 : 1);
-            } else if ( p.getAlçada() <= 170 ) {
-                rangAlcada.put("1.61-1.70", rangAlcada.containsKey("1.61-1.70") ? rangAlcada.get("1.61-1.70") + 1 : 1);
-            } else if ( p.getAlçada() <= 180 ) {
-                rangAlcada.put("1.71-1.80",rangAlcada.containsKey("1.71-1.80") ? rangAlcada.get("1.71-1.80") + 1 : 1);
-            } else if ( p.getAlçada() <= 190 ) {
-                rangAlcada.put("1.81-1.90", rangAlcada.containsKey("1.81-1.90") ? rangAlcada.get("1.81-1.90") + 1 : 1);
-            } else if ( p.getAlçada() <= 200 ) {
-                rangAlcada.put("1.91-2.00", rangAlcada.containsKey("1.91-2.00") ? rangAlcada.get("1.91-2.00") + 1 : 1);
-            } else if ( p.getAlçada() >= 200 ) {
-                rangAlcada.put("2.00", rangAlcada.containsKey("2.00") ? rangAlcada.get("2.00") + 1 : 1);
+                }else {
+                    pesMap.put(p.getPes(),1);
+                }
             }
-        }
-        idPieChart2.setTitle("Rang Alçada");
+            idPieChart1.setTitle("PES");
 
-        for (String key : rangAlcada.keySet()) {
-            idPieChart2.getData().add(new PieChart.Data(key + " = " + String.valueOf(rangAlcada.get(key)),rangAlcada.get(key)));
+            for (float key : pesMap.keySet()) {
+                idPieChart1.getData().add(new PieChart.Data(String.valueOf(key),pesMap.get(key)));
+            }
+
+
+            for(Pacient p: pacientList) {
+                if(alcada.containsKey(p.getAlçada())) {
+                    alcada.put(p.getAlçada(), alcada.get(p.getAlçada())+1);
+
+                }else {
+                    alcada.put(p.getAlçada(),1);
+                }
+            }
+            idPieChart2.setTitle("Alçada");
+
+            for (int key : alcada.keySet()) {
+                idPieChart2.getData().add(new PieChart.Data(String.valueOf(key),alcada.get(key)));
+            }
+        } else if (event.getClickCount() >=2){
+            Map<String, Integer> rangEdat = new HashMap<String, Integer>();
+            Map<String, Integer> rangPes = new HashMap<String, Integer>();
+            Map<String, Integer> rangAlcada = new HashMap<String, Integer>();
+
+            for(Pacient p: pacientList) {
+
+                // Utilizamos Ternarias para comprobar si existe la key con valor. Si Hay valor sumas 1 sino estableces un valor
+                // Pd: No deberia Harcodear Tanto
+
+                if(p.getEdat() <= 20 ){
+                    rangEdat.put("<=20" , rangEdat.containsKey("<=20") ? rangEdat.get("<=20")+1 : 1);
+                } else if ( p.getEdat() <= 30 ) {
+                    rangEdat.put("20-30", rangEdat.containsKey("20-30") ? rangEdat.get("20-30") + 1 : 1);
+                } else if ( p.getEdat() <= 40 ) {
+                    rangEdat.put("31-40", rangEdat.containsKey("31-40") ? rangEdat.get("31-40") + 1 : 1);
+                } else if ( p.getEdat() <= 50 ) {
+                    rangEdat.put("41-50", rangEdat.containsKey("41-50") ? rangEdat.get("41-50") + 1 : 1);
+                } else if ( p.getEdat() <= 60 ) {
+                    rangEdat.put("51-60", rangEdat.containsKey("51-60") ? rangEdat.get("51-60") + 1 : 1);
+                } else if ( p.getEdat() >= 60 ) {
+                    rangEdat.put(">=60", rangEdat.containsKey(">=60") ? rangEdat.get(">=60") + 1 : 1);
+                }
+            }
+            idPieChart.setTitle("Rang Edat");
+
+            for (String key : rangEdat.keySet()) {
+                idPieChart.getData().add(new PieChart.Data(key + " = " + String.valueOf(rangEdat.get(key)),rangEdat.get(key)));
+            }
+
+            for(Pacient p: pacientList) {
+
+                // Utilizamos Ternarias para comprobar si existe la key con valor. Si Hay valor sumas 1 sino estableces un valor
+                // Pd: No deberia Harcodear Tanto
+
+                if(p.getPes() <= 60 ){
+                    rangPes.put("<=60" , rangPes.containsKey("<=60") ? rangPes.get("<=60")+1 : 1);
+                } else if ( p.getPes() <= 80 ) {
+                    rangPes.put("61-80", rangPes.containsKey("61-80") ? rangPes.get("61-80") + 1 : 1);
+                } else if ( p.getPes() <= 100 ) {
+                    rangPes.put("81-100", rangPes.containsKey("81-100") ? rangPes.get("81-100") + 1 : 1);
+                } else if ( p.getPes() <= 120 ) {
+                    rangPes.put("101-120", rangPes.containsKey("101-120") ? rangPes.get("101-120") + 1 : 1);
+                } else if ( p.getPes() >= 120 ) {
+                    rangPes.put(">120", rangPes.containsKey(">120") ? rangPes.get(">120") + 1 : 1);
+                }
+            }
+            idPieChart1.setTitle("Rang Pes");
+
+            for (String key : rangPes.keySet()) {
+                idPieChart1.getData().add(new PieChart.Data(key + " = " + String.valueOf(rangPes.get(key)),rangPes.get(key)));
+            }
+
+            for(Pacient p: pacientList) {
+
+                // Utilizamos Ternarias para comprobar si existe la key con valor. Si Hay valor sumas 1 sino estableces un valor
+                // Pd: No deberia Harcodear Tanto
+
+                if(p.getAlçada() <= 150 ){
+                    rangAlcada.put("<=1.50" , rangAlcada.containsKey("<=1.50") ? rangAlcada.get("<=1.50")+1 : 1);
+                } else if ( p.getAlçada() <= 160 ) {
+                    rangAlcada.put("1.51-1.60", rangAlcada.containsKey("1.51-1.60") ? rangAlcada.get("1.51-1.60") + 1 : 1);
+                } else if ( p.getAlçada() <= 170 ) {
+                    rangAlcada.put("1.61-1.70", rangAlcada.containsKey("1.61-1.70") ? rangAlcada.get("1.61-1.70") + 1 : 1);
+                } else if ( p.getAlçada() <= 180 ) {
+                    rangAlcada.put("1.71-1.80",rangAlcada.containsKey("1.71-1.80") ? rangAlcada.get("1.71-1.80") + 1 : 1);
+                } else if ( p.getAlçada() <= 190 ) {
+                    rangAlcada.put("1.81-1.90", rangAlcada.containsKey("1.81-1.90") ? rangAlcada.get("1.81-1.90") + 1 : 1);
+                } else if ( p.getAlçada() <= 200 ) {
+                    rangAlcada.put("1.91-2.00", rangAlcada.containsKey("1.91-2.00") ? rangAlcada.get("1.91-2.00") + 1 : 1);
+                } else if ( p.getAlçada() >= 200 ) {
+                    rangAlcada.put("2.00", rangAlcada.containsKey("2.00") ? rangAlcada.get("2.00") + 1 : 1);
+                }
+            }
+            idPieChart2.setTitle("Rang Alçada");
+
+            for (String key : rangAlcada.keySet()) {
+                idPieChart2.getData().add(new PieChart.Data(key + " = " + String.valueOf(rangAlcada.get(key)),rangAlcada.get(key)));
+            }
         }
     }
 

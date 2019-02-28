@@ -52,10 +52,5 @@ public class Controller implements Initializable {
         }else{
             paneDret.getChildren().clear();
         }
-
-
     }
-
-
-
 }
