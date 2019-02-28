@@ -14,11 +14,13 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
     public String csvFile = null; //"src/hospital/data/Hospital.csv";
-    @FXML AnchorPane paneDret;
+    @FXML AnchorPane paneDretORG;
+
+    static AnchorPane paneDret;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        paneDret = paneDretORG;
     }
 
     @FXML public void onClickBtnMenu(ActionEvent actionEvent) {
@@ -27,7 +29,7 @@ public class Controller implements Initializable {
 
         if(btn.equals("btnLlista")) {
             // ListView lsvLlista = new ListView();
-            paneDret.getChildren().clear();
+            paneDretORG.getChildren().clear();
             AnchorPane anchorPaneLlista = null;
             try {
 
@@ -36,10 +38,10 @@ public class Controller implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            paneDret.getChildren().add(anchorPaneLlista);
+            paneDretORG.getChildren().add(anchorPaneLlista);
 
         }else if(btn.equals("btnCerca")){
-            paneDret.getChildren().clear();
+            paneDretORG.getChildren().clear();
             AnchorPane anchorPaneLlista = null;
             try {
 
@@ -48,9 +50,9 @@ public class Controller implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            paneDret.getChildren().add(anchorPaneLlista);
+            paneDretORG.getChildren().add(anchorPaneLlista);
         }else{
-            paneDret.getChildren().clear();
+            paneDretORG.getChildren().clear();
         }
     }
 }

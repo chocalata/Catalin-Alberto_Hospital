@@ -29,7 +29,10 @@ import java.util.stream.Stream;
 public class ControllerLlista implements Initializable {
 
     private static String csvFile = null;
+    private List<Pacient> pacientListORG = new ArrayList<>();
     private List<Pacient> pacientList = new ArrayList<>();
+
+
     private ObservableList<Pacient> data;
 
     @FXML TableView<Pacient> tablePacients;
@@ -84,17 +87,11 @@ public class ControllerLlista implements Initializable {
 
 
     public void clickLoadFile() {
-        if(csvFile == null) {
-            FileChooser fc = new FileChooser();
-            fc.setTitle("Select csv file");
-            File file = fc.showOpenDialog(null);
-            if(file != null) {
-                csvFile = file.getAbsolutePath();
-                setTableView();
-                btnLoadFile.setText("Loaded");
-            }
-        }else {
-            btnLoadFile.setText("File is loaded");
+        FileChooser fc = new FileChooser();
+        File file = fc.showOpenDialog(null);
+        if(file != null) {
+            csvFile = file.getAbsolutePath();
+            setTableView();
         }
     }
 
@@ -160,6 +157,9 @@ public class ControllerLlista implements Initializable {
 //            System.out.println("TIENEN LA MISMA EDAD");
 //        }
         List<Pacient> pacients = pacientList.stream()
+                .filter(pacient -> txtNom.getText().equals("") || pacient.getNom().contains(txtNom.getText()))
+                .filter((pacient -> txtCognoms.getText().equals("") || pacient.getCognoms().contains(txtCognoms.getText())))
+                .filter(pacient -> txtDNI.getText().equals("") || pacient.getDNI().contains(txtDNI.getText()))
                 .filter(pacient -> txtEdat.getText().equals("") || filtroEdad(pacient))
                 .filter(pacient -> txtAlcada.getText().equals("") || filtroAltura(pacient))
                 .filter(pacient -> txtPes.getText().equals("") || filtroPeso(pacient))
@@ -180,7 +180,10 @@ public class ControllerLlista implements Initializable {
                 }*/
                 .collect(Collectors.toList());
 
-        if(txtEdat.getText().equals("")
+        if(txtNom.getText().equals("")
+                && txtCognoms.getText().equals("")
+                && txtDNI.getText().equals("")
+                && txtEdat.getText().equals("")
                 && txtAlcada.getText().equals("")
                 && txtPes.getText().equals("")) {
             updateTable(pacientList);
@@ -193,7 +196,7 @@ public class ControllerLlista implements Initializable {
         tablePacients.setItems(data);
     }
 ///////////////////FALTA: que se pueda buscar con el tipo de filtro de changeText() y con btnCerca()
-    public void changeText(KeyEvent keyEvent) {
+    /*public void changeText(KeyEvent keyEvent) {
         data.clear();
         List<Pacient> pacients = pacientList.stream()
                 .filter(pacient -> pacient.getNom().contains(txtNom.getText()))
@@ -202,7 +205,7 @@ public class ControllerLlista implements Initializable {
                 .collect(Collectors.toList());
         data.addAll(pacients);
         tablePacients.setItems(data);
-    }
+    }*/
 
     public void clickTable(MouseEvent event) {
         //Cal verificar si hi ha alguna selecció feta al fer doble click

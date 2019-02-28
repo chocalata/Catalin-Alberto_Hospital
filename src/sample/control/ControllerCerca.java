@@ -1,14 +1,11 @@
 package sample.control;
 
 import com.jfoenix.controls.JFXButton;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -23,7 +20,9 @@ import java.util.stream.Collectors;
 public class ControllerCerca implements Initializable {
     @FXML AnchorPane paneButtons;
 
-    int cantidadBotones;
+    int columnaBotones;
+    int filaBotones;
+
     List<String> pathList;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -40,17 +39,23 @@ public class ControllerCerca implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        cantidadBotones = 0;
+        filaBotones = 0;
+        columnaBotones = 0;
         for (File file:carpetaFiles) {
             if (new File(file.getName()).getName().matches("^.*\\.csv$")) {
                 button = new JFXButton();
                 //propiedades del botón.
-                button.setId("button" + cantidadBotones++);
                 button.setPrefWidth(100);
                 button.setPrefHeight(100);
                 button.setText(file.getName());
-                button.setLayoutX(100 * (cantidadBotones - 1));
+                button.setLayoutX(100 * (columnaBotones));
+                button.setLayoutY(100 * (filaBotones));
+                button.setId("button" + ((filaBotones*7) + columnaBotones++));
 
+                if(columnaBotones == 7){
+                    filaBotones++;
+                    columnaBotones = 0;
+                }
                 //lista de rutas de los ficheros a los que hace referencia cada boton.
                 pathList.add(file.getAbsolutePath());
 
@@ -61,17 +66,15 @@ public class ControllerCerca implements Initializable {
                                             .getSource())
                                             .getId()
                                             .replace("button", ""))));
-                    /////////FALTA: CAMBIAR LA VENTANA AL HACER CLICK EN UN BOTON
-                    //////no funciona pero es una idea
-                    /*try {
-                        FXMLLoader anchorPane = FXMLLoader.load(getClass().getResource("../fxml/hospital.fxml"));
-                        Controller controller = ((FXMLLoader)FXMLLoader.load(getClass().getResource("../fxml/hospital.fxml"))).getController();
-                        controller.paneDret.getChildren().add(FXMLLoader.load(getClass().getResource("../fxml/llista.fxml")));
+
+                    try {
+                        Controller.paneDret.getChildren().add(FXMLLoader.load(getClass().getResource("../fxml/llista.fxml")));
+                        System.out.println(((JFXButton) actionEvent.getSource()).getText());
                     } catch (IOException e) {
                         e.printStackTrace();
-                    }*/
-                    System.out.println(((JFXButton) actionEvent.getSource()).getText());
-                });
+                    }
+
+                    });
                 paneButtons.getChildren().add(button);
             }
         }

@@ -17,17 +17,17 @@
         <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <TableView fx:id="tablePacients" onMouseClicked="#clickTable" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                <JFXButton fx:id="btnLoadFile" maxWidth="1.7976931348623157E308" onAction="#clickLoadFile" text="Load" />
+                <JFXButton fx:id="btnLoadFile" maxWidth="1.7976931348623157E308" onAction="#clickLoadFile" text="Select csv file" />
                 <HBox spacing="5.0">
-                    <JFXTextField fx:id="txtNom" labelFloat="true" maxWidth="1.7976931348623157E308" onKeyTyped="#changeText" promptText="Nom" />
-                    <JFXTextField fx:id="txtCognoms" labelFloat="true" maxWidth="1.7976931348623157E308" onKeyTyped="#changeText" promptText="Cognoms" />
-                    <JFXTextField fx:id="txtDNI" labelFloat="true" maxWidth="1.7976931348623157E308" onKeyTyped="#changeText" promptText="DNI" />
+                    <JFXTextField fx:id="txtNom" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Nom" />
+                    <JFXTextField fx:id="txtCognoms" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Cognoms" />
+                    <JFXTextField fx:id="txtDNI" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="DNI" />
                 </HBox>
                 <HBox spacing="5.0">
                     <children>
-                        <JFXTextField fx:id="txtEdat" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Edat (n/n-n/&gt;&lt;n)" />
-                        <JFXTextField fx:id="txtAlcada" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Alçada (n/n-n/&gt;&lt;n)" />
-                        <JFXTextField fx:id="txtPes" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Pes (n/n-n/&gt;&lt;n)" />
+                        <JFXTextField fx:id="txtEdat" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Edat (n/n-n/n&gt;&lt;)" />
+                        <JFXTextField fx:id="txtAlcada" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Alçada (n/n-n/n&gt;&lt;)" />
+                        <JFXTextField fx:id="txtPes" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Pes (n/n-n/n&gt;&lt;)" />
                         <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" onAction="#btnCerca" text="Cerca" textAlignment="CENTER" textOverrun="LEADING_ELLIPSIS" />
                         <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" onMouseClicked="#btnChart" text="Chart" textAlignment="CENTER" textOverrun="LEADING_ELLIPSIS" />
                     </children>
