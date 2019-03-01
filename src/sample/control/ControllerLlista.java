@@ -231,32 +231,13 @@ public class ControllerLlista implements Initializable {
 
                 bufferedWriter.newLine();
                 bufferedWriter.write(tablePacients.getSelectionModel().getSelectedItem().toString());
+
                 bufferedWriter.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
             System.out.println(tablePacients.getSelectionModel().getSelectedItem().getNom());
         }
-           // Crear Metodo crear Tabla lista de espera (utilizar unicamente si no esta instanciado la lista).
-          // Crear metodo añadir persona a la Tabla (Nombre, apellido)
-         // Mostrar la tabla en la pestaña llista
-        // Al eliminar una persona de la tabla, crear una nueva tabla sin esa persona.
-
-    }
-
-    public void crearTablaListaEspera(){
-
-        // Creamos nueva tabla.
-
-    }
-    public void añadirPacienteLE(){
-
-        // Añadimos Paciente a la tabla.
-    }
-    public void eliminarPersona(){
-
-        // Elimina personade la tabla.
-        // Crea una nueva con los datos actualizados.
     }
 
     /**
