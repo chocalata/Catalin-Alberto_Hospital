@@ -49,4 +49,8 @@ public class Pacient extends Persona {
 	}
 
 
+	@Override
+	public String toString() {
+		return getNom();
+	}
 }

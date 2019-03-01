@@ -11,8 +11,7 @@ import javafx.scene.input.MouseEvent;
 import sample.model.Hospital;
 import sample.model.Pacient;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +40,8 @@ public class ControlerEspera implements Initializable {
     }
 
     private void setTableView() {
+        data.clear();
+
         TableColumn DNI = new TableColumn("DNI");
         TableColumn Nom = new TableColumn("Nom");
         TableColumn Cognoms = new TableColumn("Cognoms");
@@ -63,18 +64,48 @@ public class ControlerEspera implements Initializable {
         tableListaEspera.getColumns().addAll(DNI, Nom, Cognoms, DataNaix, Genre, Telefon, pes, Alçada);
 
         //data.add(new Pacient("111", "n", "co", LocalDate.of(2000, 12, 12), Persona.Genere.HOME, "55555", 5.4f, 100));
-        loadData();
         data.addAll(pacientList);
         tableListaEspera.setItems(data);
 
     }
     public void clickTable(MouseEvent event) {
         //Cal verificar si hi ha alguna selecció feta al fer doble click
-        if (event.getClickCount() == 2 && !tableListaEspera.getSelectionModel().isEmpty()){
 
-            // Eliminar Paciente del CSV
+        try {
+            if (pacientList != null && tableListaEspera != null && event != null) {
 
-            // Actualizar CSV
+                if (event.getClickCount() == 2 && !tableListaEspera.getSelectionModel().isEmpty()) {
+
+                    if (pacientList.remove(tableListaEspera.getSelectionModel().getSelectedItem())) {
+
+                        BufferedWriter bw = new BufferedWriter(new FileWriter(new File("src/sample/data/LlistaEspera.csv")));
+                        bw.write("dni,nom,cognoms,datanaixament,genere,telèfon,pes,alçada");
+
+                        for (Pacient p : pacientList) {
+                            bw.newLine();
+                            bw.write(p.getDNI() + ","
+                                    + p.getNom() + ","
+                                    + p.getCognoms() + ","
+                                    + ((p.getDataNaixament().getDayOfMonth()<10)
+                                    ? "0" + p.getDataNaixament().getDayOfMonth()
+                                    : p.getDataNaixament().getDayOfMonth()) + "/"
+                                    + ((p.getDataNaixament().getMonthValue()<10)
+                                    ? "0" + p.getDataNaixament().getMonthValue()
+                                    : p.getDataNaixament().getMonthValue()) + "/"
+                                    + p.getDataNaixament().getYear() + ","
+                                    + p.getGenere() + ","
+                                    + p.getTelefon() + ","
+                                    + "\"" + p.getPes()  + "\","
+                                    + "\"" + p.getAlçada() +  "\"");
+                        }
+                        bw.close();
+                        setTableView();
+                        // Actualizar CSV
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
