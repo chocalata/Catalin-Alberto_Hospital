@@ -2,7 +2,6 @@ package sample.control;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -34,7 +33,6 @@ public class ControllerLlista implements Initializable {
     private static String csvFile = null;
     private List<Pacient> pacientListORG = new ArrayList<>();
     private List<Pacient> pacientList = new ArrayList<>();
-    /////////////FALTA QUITAR EL BOTON DE CHART
     private List<Pacient> listaChart = pacientList;
 
     private ObservableList<Pacient> data;
@@ -215,6 +213,9 @@ public class ControllerLlista implements Initializable {
         tablePacients.setItems(data);
     }*/
 
+    public void showNotificationClickTable(){
+        //NotificationPane
+    }
     public void clickTable(MouseEvent event) {
         boolean existe = false;
         //Cal verificar si hi ha alguna selecció feta al fer doble click
