@@ -4,20 +4,15 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.PieChart;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import sample.model.Hospital;
 import sample.model.Pacient;
-import sample.model.Persona;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -26,10 +21,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ControllerLlista implements Initializable {
-
+    Alert alert;
     private static String csvFile = null;
     private List<Pacient> pacientListORG = new ArrayList<>();
     private List<Pacient> pacientList = new ArrayList<>();
@@ -213,13 +207,32 @@ public class ControllerLlista implements Initializable {
         tablePacients.setItems(data);
     }*/
 
-    public void showNotificationClickTable(){
-        //NotificationPane
+    public void showNotificationClickTable(Pacient pacient){
+//        NotificationPane notificationPane = new NotificationPane();
+//        notificationPane.getStyleClass().add(NotificationPane.STYLE_CLASS_DARK);
+//        notificationPane.setText("PEPE");
+//        notificationPane.show();
+//        new Thread(() -> {
+//            try {
+//                Thread.sleep(2000);
+//            } catch (InterruptedException ex) {
+//                // Ignore
+//            }
+//            Platform.runLater(notificationPane::hide);
+//        }).start();
+        alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("AÑADIDO");
+        alert.setHeaderText("Nuevo paciente");
+        alert.setContentText("Se ha añadido a " + pacient.getNom() + " " + pacient.getCognoms() + " a la lista de espera");
+
+        alert.showAndWait();
+
     }
     public void clickTable(MouseEvent event) {
         boolean existe = false;
         //Cal verificar si hi ha alguna selecció feta al fer doble click
         if (event.getClickCount() == 2 && !tablePacients.getSelectionModel().isEmpty()){
+            showNotificationClickTable(tablePacients.getSelectionModel().getSelectedItem());
             try {
                 File file = new File("src/sample/data/LlistaEspera.csv");
 
