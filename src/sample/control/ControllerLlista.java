@@ -229,20 +229,7 @@ public class ControllerLlista implements Initializable {
                 if(!existe) bufferedWriter.write("dni,nom,cognoms,datanaixament,genere,telèfon,pes,alçada");
 
                 bufferedWriter.newLine();
-                bufferedWriter.write(tablePacients.getSelectionModel().getSelectedItem().getDNI() + ","
-                        + tablePacients.getSelectionModel().getSelectedItem().getNom() + ","
-                        + tablePacients.getSelectionModel().getSelectedItem().getCognoms() + ","
-                        + ((tablePacients.getSelectionModel().getSelectedItem().getDataNaixament().getDayOfMonth()<10)
-                                ? "0" + tablePacients.getSelectionModel().getSelectedItem().getDataNaixament().getDayOfMonth()
-                                : tablePacients.getSelectionModel().getSelectedItem().getDataNaixament().getDayOfMonth()) + "/"
-                            + ((tablePacients.getSelectionModel().getSelectedItem().getDataNaixament().getMonthValue()<10)
-                                ? "0" + tablePacients.getSelectionModel().getSelectedItem().getDataNaixament().getMonthValue()
-                                : tablePacients.getSelectionModel().getSelectedItem().getDataNaixament().getMonthValue()) + "/"
-                            + tablePacients.getSelectionModel().getSelectedItem().getDataNaixament().getYear() + ","
-                        + tablePacients.getSelectionModel().getSelectedItem().getGenere() + ","
-                        + tablePacients.getSelectionModel().getSelectedItem().getTelefon() + ","
-                        + "\"" + tablePacients.getSelectionModel().getSelectedItem().getPes()  + "\","
-                        + "\"" + tablePacients.getSelectionModel().getSelectedItem().getAlçada() +  "\"");
+                bufferedWriter.write(tablePacients.getSelectionModel().getSelectedItem().toString());
                 bufferedWriter.close();
             } catch (IOException e) {
                 e.printStackTrace();

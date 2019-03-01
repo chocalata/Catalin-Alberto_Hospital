@@ -83,20 +83,7 @@ public class ControlerEspera implements Initializable {
 
                         for (Pacient p : pacientList) {
                             bw.newLine();
-                            bw.write(p.getDNI() + ","
-                                    + p.getNom() + ","
-                                    + p.getCognoms() + ","
-                                    + ((p.getDataNaixament().getDayOfMonth()<10)
-                                    ? "0" + p.getDataNaixament().getDayOfMonth()
-                                    : p.getDataNaixament().getDayOfMonth()) + "/"
-                                    + ((p.getDataNaixament().getMonthValue()<10)
-                                    ? "0" + p.getDataNaixament().getMonthValue()
-                                    : p.getDataNaixament().getMonthValue()) + "/"
-                                    + p.getDataNaixament().getYear() + ","
-                                    + p.getGenere() + ","
-                                    + p.getTelefon() + ","
-                                    + "\"" + p.getPes()  + "\","
-                                    + "\"" + p.getAlçada() +  "\"");
+                            bw.write(p.toString());
                         }
                         bw.close();
                         setTableView();

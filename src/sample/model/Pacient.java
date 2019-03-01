@@ -51,6 +51,19 @@ public class Pacient extends Persona {
 
 	@Override
 	public String toString() {
-		return getNom();
+		return getDNI() + ","
+				+ getNom() + ","
+				+ getCognoms() + ","
+				+ ((getDataNaixament().getDayOfMonth()<10)
+					? "0" + getDataNaixament().getDayOfMonth()
+					: getDataNaixament().getDayOfMonth()) + "/"
+				+ ((getDataNaixament().getMonthValue()<10)
+					? "0" + getDataNaixament().getMonthValue()
+					: getDataNaixament().getMonthValue()) + "/"
+				+ getDataNaixament().getYear() + ","
+				+ getGenere() + ","
+				+ getTelefon() + ","
+				+ "\"" + getPes()  + "\","
+				+ "\"" + getAlçada() +  "\"";
 	}
 }
