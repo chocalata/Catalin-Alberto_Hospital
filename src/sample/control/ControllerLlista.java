@@ -216,28 +216,33 @@ public class ControllerLlista implements Initializable {
     }*/
 
     public void clickTable(MouseEvent event) {
+        boolean existe = false;
         //Cal verificar si hi ha alguna selecció feta al fer doble click
         if (event.getClickCount() == 2 && !tablePacients.getSelectionModel().isEmpty()){
             try {
                 File file = new File("src/sample/data/LlistaEspera.csv");
 
-                //////////////////HACER QUE CUANDO SE CREE UN NUEVO FICHERO SE AÑADA LA CABECERA DEL CSV
+                if(file.exists()) existe = true;
+
                 BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true));
-                if(file.createNewFile()){
-                    bufferedWriter.write("dni,nom,cognoms,datanaixament,genere,telèfon,pes,alçada");
-                    bufferedWriter.newLine();
-                }
-               bufferedWriter.write(tablePacients.getSelectionModel().getSelectedItem().getDNI() + ","
+
+                if(!existe) bufferedWriter.write("dni,nom,cognoms,datanaixament,genere,telèfon,pes,alçada");
+
+                bufferedWriter.newLine();
+                bufferedWriter.write(tablePacients.getSelectionModel().getSelectedItem().getDNI() + ","
                         + tablePacients.getSelectionModel().getSelectedItem().getNom() + ","
                         + tablePacients.getSelectionModel().getSelectedItem().getCognoms() + ","
-                        + tablePacients.getSelectionModel().getSelectedItem().getDataNaixament().getDayOfMonth() + "/"
-                            + tablePacients.getSelectionModel().getSelectedItem().getDataNaixament().getMonthValue() + "/"
+                        + ((tablePacients.getSelectionModel().getSelectedItem().getDataNaixament().getDayOfMonth()<10)
+                                ? "0" + tablePacients.getSelectionModel().getSelectedItem().getDataNaixament().getDayOfMonth()
+                                : tablePacients.getSelectionModel().getSelectedItem().getDataNaixament().getDayOfMonth()) + "/"
+                            + ((tablePacients.getSelectionModel().getSelectedItem().getDataNaixament().getMonthValue()<10)
+                                ? "0" + tablePacients.getSelectionModel().getSelectedItem().getDataNaixament().getMonthValue()
+                                : tablePacients.getSelectionModel().getSelectedItem().getDataNaixament().getMonthValue()) + "/"
                             + tablePacients.getSelectionModel().getSelectedItem().getDataNaixament().getYear() + ","
                         + tablePacients.getSelectionModel().getSelectedItem().getGenere() + ","
                         + tablePacients.getSelectionModel().getSelectedItem().getTelefon() + ","
-                        + tablePacients.getSelectionModel().getSelectedItem().getPes() + ","
-                        + tablePacients.getSelectionModel().getSelectedItem().getAlçada());
-                bufferedWriter.newLine();
+                        + "\"" + tablePacients.getSelectionModel().getSelectedItem().getPes()  + "\","
+                        + "\"" + tablePacients.getSelectionModel().getSelectedItem().getAlçada() +  "\"");
                 bufferedWriter.close();
             } catch (IOException e) {
                 e.printStackTrace();
