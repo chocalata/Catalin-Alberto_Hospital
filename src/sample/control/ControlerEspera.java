@@ -29,7 +29,10 @@ public class ControlerEspera implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         data = FXCollections.observableArrayList();
-        setTableView();
+        loadData();
+        if(pacientList.size() != 0) {
+            setTableView();
+        }
     }
 
     private void loadData() {
